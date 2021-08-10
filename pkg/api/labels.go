@@ -33,6 +33,8 @@ const (
 	ConfigHashLabel = "com.docker.compose.config-hash"
 	// ContainerNumberLabel stores the container index of a replicated service
 	ContainerNumberLabel = "com.docker.compose.container-number"
+	// DependsOnLabel reflects the depends_on array as a comma-separated string
+	DependsOnLabel = "com.docker.compose.depends_on"
 	// VolumeLabel allow to track resource related to a compose volume
 	VolumeLabel = "com.docker.compose.volume"
 	// NetworkLabel allow to track resource related to a compose network

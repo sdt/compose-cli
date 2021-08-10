@@ -216,6 +216,7 @@ func (s *composeService) getCreateOptions(ctx context.Context, p *types.Project,
 	labels[api.WorkingDirLabel] = p.WorkingDir
 	labels[api.ConfigFilesLabel] = strings.Join(p.ComposeFiles, ",")
 	labels[api.ContainerNumberLabel] = strconv.Itoa(number)
+	labels[api.DependsOnLabel] = getDependsOnLabelForService(service)
 
 	var (
 		runCmd     strslice.StrSlice
@@ -909,6 +910,14 @@ func getNetworksForService(s types.ServiceConfig) map[string]*types.ServiceNetwo
 		return nil
 	}
 	return map[string]*types.ServiceNetworkConfig{"default": nil}
+}
+
+func getDependsOnLabelForService(s types.ServiceConfig) string {
+	services := make([]string, 0, len(s.DependsOn))
+	for k := range s.DependsOn {
+		services = append(services, k)
+	}
+	return strings.Join(services, ",")
 }
 
 func (s *composeService) ensureNetwork(ctx context.Context, n types.NetworkConfig) error {
